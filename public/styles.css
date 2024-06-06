@@ -1,0 +1,24 @@
+html,
+body {
+  font-size: 1.25rem;
+}
+
+.app {
+  max-width: 1024px;
+  margin: 3rem auto 0;
+}
+
+.add-recipe-form {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.add-recipe-form input,
+.add-recipe-form button {
+  width: fit-content;
+}
+
+.form-label {
+  margin-bottom: 6px;
+}

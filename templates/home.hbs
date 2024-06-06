@@ -1,0 +1,35 @@
+<div class="app">
+  <h1>Home</h1>
+  {{#if recipes.length}}
+    <div>
+      <a href="/recipes">Go to all recipes</a>
+    </div>
+  {{else}}
+    <p>No recipes found</p>
+  {{/if}}
+
+  <h2>Add a recipe</h2>
+  <form method="post" class="add-recipe-form">
+    <label>
+      <div class="form-label">Recipe Name</div>
+      <input type="text" id="recipe-name" name="recipe-name" />
+    </label>
+    <label>
+      <div class="form-label">Which type of recipe is it?</div>
+      <select name="recipe-type">
+        <option value="vegan">Vegan</option>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="gluten-free">Gluten Free</option>
+        <option value="dairy-free">Dairy Free</option>
+      </select>
+    </label>
+
+    <textarea
+      name="recipe-content"
+      id="recipe-content"
+      cols="33"
+      rows="10"
+    ></textarea>
+    <button type="submit">Add Recipe</button>
+  </form>
+</div>
