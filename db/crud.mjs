@@ -1,4 +1,4 @@
-/**File Description: To read ds/recipes.json file */
+/**File Description: To read db/recipes.json file */
 import path from "node:path";
 import fs from "node:fs/promises";
 
@@ -15,11 +15,6 @@ export async function readRecipes(options) {
 
   // read the db/recipes.json file path
   const currentRecipesDataFilePath = path.join(__currentDir, "recipes.json");
-
-  console.info({
-    debug: currentRecipesDataFilePath,
-  });
-
   // read the content of file (buffer/bindary type)
   let currentRecipesData = await fs.readFile(currentRecipesDataFilePath);
 

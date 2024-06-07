@@ -1,0 +1,12 @@
+<h1>Recipes</h1>
+<ul>
+  {{#each recipes}}
+    <li>
+      <h2>{{recipe-name}}</h2>
+      <p>Type: {{recipe-type}}</p>
+      <p>{{recipe-content}}</p>
+    </li>
+  {{/each}}
+  </ul>
+{{!-- <pre>{{recipesJSONString}}</pre> --}}
+

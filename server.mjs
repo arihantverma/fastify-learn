@@ -52,29 +52,33 @@ fastify.get("/", async function homePageHandler(request, reply) {
 fastify.post("/", async function homePagePostHandler(request, reply) {
   // STEP 1: read the incoming form data request.body
   const incomingFormDataObject = request.body;
+
   // STEP 2: read the db/recipes.json file
-  const { currentRecipesData, currentRecipesDataFilePath } =
-    await readRecipes();
-
-  // "[]" stringified json
-  const currentRecipesDataString =
-    Buffer.from(currentRecipesData).toString("utf-8");
-
-  // convert stringified json to javascript object
-  const currentRecipesArray = JSON.parse(currentRecipesDataString);
+  const { currentRecipesData, currentRecipesDataFilePath } = await readRecipes({
+    retType: "json",
+  });
 
   // STEP 3: merge new data with existing recipes data
   // clone the existing data
-  const newRecipesArray = structuredClone(currentRecipesArray);
+  const newRecipesArray = structuredClone(currentRecipesData);
   // add the incoming form data
   newRecipesArray.push(incomingFormDataObject);
-  // STEP 4:write the updated data to db/recipes.json
+
+  //STEP 4: write the update data to db/recipes.json
   const contentToWriteJSONString = JSON.stringify(newRecipesArray, null, 2);
   await fs.writeFile(currentRecipesDataFilePath, contentToWriteJSONString);
 
-  // return this same response but with `recipes` array updated
-
+  // return this same respone but with updated `recipes` array
   return reply.render("./home.hbs", { recipes: newRecipesArray });
+});
+
+fastify.get("/recipes", async function recipesPageHandler(request, reply) {
+  const { currentRecipesData } = await readRecipes({ retType: "json" });
+  const currentRecipeJSONString = JSON.stringify(currentRecipesData, null, 2);
+  return reply.render("./recipes.hbs", {
+    recipesJSONString: currentRecipeJSONString,
+    recipes: currentRecipesData,
+  });
 });
 
 // API ROUTES
