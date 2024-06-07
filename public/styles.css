@@ -29,3 +29,11 @@ pre {
   border-radius: 5px;
   font-family: monospace;
 }
+
+.pre-line {
+  white-space: pre-line;
+}
+
+.hide {
+  display: none;
+}

@@ -1,17 +1,26 @@
 [
   {
+    "id": "a5c524cf-7896-435f-a54a-0539cb0047af",
     "recipe-name": "Besan Chilla",
     "recipe-type": "vegan",
-    "recipe-content": "Whatever my recipe will be here"
+    "recipe-content": "This is my besan chilla\r\n\r\nI'm going to write a good recipe"
   },
   {
+    "id": "033a5e9c-c985-4774-b205-d2c7540c986c",
     "recipe-name": "Chana Chaat",
     "recipe-type": "vegan",
-    "recipe-content": "What a wow chaaat"
+    "recipe-content": "Chaneee ke kheeet me"
   },
   {
-    "recipe-name": "Baigan",
+    "id": "1fa0e975-7af5-4378-a4f5-054872ec7eee",
+    "recipe-name": "Paneer Biryani",
     "recipe-type": "vegan",
-    "recipe-content": "ayein!"
+    "recipe-content": "Ya to meghna ki ya to mani's"
+  },
+  {
+    "id": "f65c8bda-3ad0-4c3a-9033-5d84ad2f7711",
+    "recipe-name": "Egg Biryani",
+    "recipe-type": "gluten-free",
+    "recipe-content": "Oh yeaaah, I'm so smarrttttt"
   }
 ]

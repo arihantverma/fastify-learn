@@ -1,12 +1,40 @@
-<h1>Recipes</h1>
-<ul>
-  {{#each recipes}}
-    <li>
-      <h2>{{recipe-name}}</h2>
-      <p>Type: {{recipe-type}}</p>
-      <p>{{recipe-content}}</p>
-    </li>
-  {{/each}}
-  </ul>
-{{!-- <pre>{{recipesJSONString}}</pre> --}}
+<div class="app">
+  <div id="recipe-list">
+    <h1>Recipes</h1>
+    <ul id="recipe-list">
+      {{#each recipes}}
+        <li>
+          <a href="/recipes/{{id}}">{{recipe-name}}</a>
+          <svg
+            class="loader hide"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-loader"
+          ><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path
+              d="M18 12h4"
+            /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path
+              d="m4.9 19.1 2.9-2.9"
+            /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></svg>
+          <hr />
+        </li>
+      {{/each}}
+    </ul>
 
+  </div>
+
+  <div id="full-recipe-placeholder" class="hide">
+    <h1>Recipe</h1>
+    <p id="recipe-name"></p>
+    <p id="recipe-type"></p>
+    <hr />
+    <p id="recipe-content" class="pre-line"></p>
+  </div>
+</div>
+{{!-- <pre>{{recipesJSONString}}</pre> --}}

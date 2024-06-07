@@ -5,6 +5,7 @@ import fastifyFormbodyPlugin from "@fastify/formbody";
 import handlebars from "handlebars";
 import path from "node:path";
 import fs from "node:fs/promises";
+import { v4 as uuidv4 } from "uuid";
 import { readRecipes } from "./db/crud.mjs";
 
 const __rootDirectoryPath = path.dirname(new URL(import.meta.url).pathname);
@@ -49,6 +50,8 @@ fastify.get("/", async function homePageHandler(request, reply) {
   return reply.render("./home.hbs", { recipes: currentRecipesData });
 });
 
+let idCounter = 0;
+
 fastify.post("/", async function homePagePostHandler(request, reply) {
   // STEP 1: read the incoming form data request.body
   const incomingFormDataObject = request.body;
@@ -62,7 +65,12 @@ fastify.post("/", async function homePagePostHandler(request, reply) {
   // clone the existing data
   const newRecipesArray = structuredClone(currentRecipesData);
   // add the incoming form data
-  newRecipesArray.push(incomingFormDataObject);
+
+  const uniqueId = uuidv4();
+  newRecipesArray.push({
+    id: uniqueId,
+    ...incomingFormDataObject,
+  });
 
   //STEP 4: write the update data to db/recipes.json
   const contentToWriteJSONString = JSON.stringify(newRecipesArray, null, 2);
@@ -75,10 +83,25 @@ fastify.post("/", async function homePagePostHandler(request, reply) {
 fastify.get("/recipes", async function recipesPageHandler(request, reply) {
   const { currentRecipesData } = await readRecipes({ retType: "json" });
   const currentRecipeJSONString = JSON.stringify(currentRecipesData, null, 2);
+
   return reply.render("./recipes.hbs", {
     recipesJSONString: currentRecipeJSONString,
     recipes: currentRecipesData,
   });
+});
+
+fastify.get("/recipes/:id", async function getRecipeHandler(request, reply) {
+  const { currentRecipesData } = await readRecipes({ retType: "json" });
+
+  const recipe = currentRecipesData.find(
+    (recipe) => recipe.id === request.params.id,
+  );
+
+  if (!recipe) {
+    return reply.code(404).send("Recipe not found");
+  }
+
+  return reply.render("./recipe.hbs", { recipe: recipe });
 });
 
 // API ROUTES
@@ -87,6 +110,23 @@ fastify.get("/api/recipes", async function getRecipesHandler(request, reply) {
   // returns json
   return reply.send(currentRecipesData);
 });
+
+fastify.get(
+  "/api/recipes/:id",
+  async function getRecipeHandler(request, reply) {
+    const { currentRecipesData } = await readRecipes({ retType: "json" });
+
+    const recipe = currentRecipesData.find(
+      (recipe) => recipe.id === request.params.id,
+    );
+
+    if (!recipe) {
+      return reply.code(404).send("Recipe not found");
+    }
+
+    return reply.send(recipe);
+  },
+);
 
 // START THE SERVER, LISTEN TO REQUESTS
 try {
